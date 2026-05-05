@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Queens Visualizer | Interactive Algorithm Guide</title>
+    <meta name="description"
+        content="An interactive N-Queens problem solver and visualizer. Watch the backtracking algorithm find all solutions step-by-step.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/animations.css">
+
+    <!-- Scripts -->
+    <script type="module" src="src/js/app.js"></script>
+</head>
+
+<body>
+    <div id="loader" class="loader-overlay">
+        <div class="loader-queen">♛</div>
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="glass-nav">
+        <div class="container flex-between">
+            <div class="logo">
+                <span class="logo-icon">♛</span>
+                <h1>N-Queens <span class="accent">Visualizer</span></h1>
+            </div>
+
+            <nav class="desktop-nav">
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#problem">Description</a></li>
+                    <li><a href="#solver">Visualize</a></li>
+                    <li><a href="#algorithm">Logic</a></li>
+                    <li><a href="#stats">Stats</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <div id="theme-toggle" class="theme-switch" aria-label="Toggle Theme">
+                    <div class="theme-switch-thumb">
+                        <span class="theme-icon-sun">☀️</span>
+                        <span class="theme-icon-moon">🌙</span>
+                    </div>
+                </div>
+                <div class="mobile-menu-btn" id="mobile-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-nav" class="mobile-nav-overlay hidden">
+            <ul class="mobile-nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#problem">Description</a></li>
+                <li><a href="#solver">Visualize</a></li>
+                <li><a href="#algorithm">Logic</a></li>
+                <li><a href="#stats">Stats</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero fade-in">
+            <div class="container grid-2">
+                <div class="hero-content">
+                    <h2 class="hero-title">Master the <span class="gradient-text">N-Queens</span> Puzzle</h2>
+                    <p class="hero-subtitle">Experience the elegance of backtracking. Visualize how computers solve one
+                        of chess's most famous mathematical problems.</p>
+                    <div class="hero-cta">
+                        <a href="#solver" class="btn btn-large btn-primary">Start Solving &rarr;</a>
+                        <a href="#problem" class="btn btn-large btn-outline">Learn the Rules</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div id="hero-mini-board" class="mini-board"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Statement Section -->
+        <section id="problem" class="section bg-dim">
+            <div class="container reveal">
+                <div class="section-header text-center">
+                    <span class="badge">Problem Definition</span>
+                    <h2>What is the N-Queens Problem?</h2>
+                </div>
+                <div class="card-grid reveal-stagger">
+                    <div class="glass-card problem-description">
+                        <p>The <strong>N-Queens puzzle</strong> is the problem of placing <code>N</code> chess queens on
+                            an <code>N×N</code> chessboard so that no two queens threaten each other.</p>
+                        <p>Thus, a solution requires that no two queens share the same <strong>row, column, or
+                                diagonal</strong>.</p>
+                        <div class="constraints">
+                            <div class="constraint-item">
+                                <span class="label">N Range</span>
+                                <span class="value">1 &le; N &le; 9</span>
+                            </div>
+                            <div class="constraint-item">
+                                <span class="label">Time Complexity</span>
+                                <span class="value">O(N!)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card example-card">
+                        <h3>Example (N=4)</h3>
+                        <div class="example-layout">
+                            <div class="solution-grid mini">
+                                <div class="row"># Q # #</div>
+                                <div class="row"># # # Q</div>
+                                <div class="row">Q # # #</div>
+                                <div class="row"># # Q #</div>
+                            </div>
+                            <p class="example-comment">One of the two valid solutions for a 4x4 board.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Solver Section -->
+        <section id="solver" class="section">
+            <div class="container full-width">
+                <div class="section-header text-center">
+                    <span class="badge">Live Solver</span>
+                    <h2>Algorithm Visualizer</h2>
+                </div>
+
+                <div class="solver-layout">
+                    <!-- Controls Sidebar -->
+                    <aside class="solver-sidebar">
+                        <div class="glass-card sticky">
+                            <!-- Difficulty Presets -->
+                            <div class="control-group">
+                                <label>Quick Presets</label>
+                                <div class="preset-buttons">
+                                    <button class="preset-btn" data-preset="4">Easy (4)</button>
+                                    <button class="preset-btn" data-preset="6">Medium (6)</button>
+                                    <button class="preset-btn" data-preset="8">Hard (8)</button>
+                                    <button class="preset-btn" data-preset="9">Expert (9)</button>
+                                </div>
+                            </div>
+
+                            <!-- Board Size Slider -->
+                            <div class="control-group">
+                                <label for="n-input">Board Size (N): <span id="n-value">4</span></label>
+                                <input type="range" id="n-input" min="1" max="9" value="4" class="slider">
+                                <div class="slider-labels">
+                                    <span>1</span>
+                                    <span>9</span>
+                                </div>
+                            </div>
+
+                            <!-- Solving Speed -->
+                            <div class="control-group">
+                                <label for="speed-input">Solving Speed</label>
+                                <select id="speed-input" class="select-input">
+                                    <option value="slow">Slow (2s)</option>
+                                    <option value="normal" selected>Normal (0.5s)</option>
+                                    <option value="fast">Fast (0.1s)</option>
+                                    <option value="instant">Instant</option>
+                                </select>
+                            </div>
+
+                            <!-- Execution Mode -->
+                            <div class="control-group">
+                                <label for="mode-input">Execution Mode</label>
+                                <select id="mode-input" class="select-input">
+                                    <option value="auto" selected>Auto Solve</option>
+                                    <option value="step">Step-by-Step</option>
+                                </select>
+                            </div>
+
+                            <!-- Main Action Buttons -->
+                            <div class="button-stack">
+                                <button id="solve-btn" class="btn btn-primary btn-block">
+                                    <span class="btn-text">Solve Now</span>
+                                    <span class="loading-spinner hidden"></span>
+                                </button>
+                                <button id="pause-btn" class="btn btn-outline btn-block hidden">
+                                    <span>⏸ Pause</span>
+                                </button>
+                                <button id="next-step-btn" class="btn btn-outline btn-block hidden">
+                                    <span>▶ Next Step</span>
+                                </button>
+                                <button id="reset-btn" class="btn btn-outline btn-block">Reset Board</button>
+                            </div>
+
+                            <!-- Performance Stats -->
+                            <div id="solver-stats" class="stats-panel hidden">
+                                <h4 class="stats-title">Performance</h4>
+                                <div class="stat-item">
+                                    <span class="stat-label">Solutions Found</span>
+                                    <span id="solution-count" class="stat-value">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Backtracks</span>
+                                    <span id="backtrack-count" class="stat-value">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Time Elapsed</span>
+                                    <span id="time-elapsed" class="stat-value">0.0s</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Operations/sec</span>
+                                    <span id="ops-per-sec" class="stat-value">0</span>
+                                </div>
+                            </div>
+
+                            <!-- Tools Section -->
+                            <div class="control-group">
+                                <label>Tools & Options</label>
+                                <div class="tools-buttons">
+                                    <button id="sound-toggle" class="tool-btn" title="Toggle sound effects">🔊 Sound</button>
+                                    <button id="help-btn" class="tool-btn" title="Show keyboard shortcuts">⌨️ Shortcuts</button>
+                                    <button id="export-btn" class="tool-btn" title="Export solutions">📥 Export</button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Main Board Area -->
+                    <div class="solver-main">
+                        <div id="main-board-container" class="board-wrapper">
+                            <div id="chessboard" class="chessboard"></div>
+                        </div>
+                        <div class="board-legend">
+                            <div class="legend-item"><span class="marker current"></span> Current Check</div>
+                            <div class="legend-item"><span class="marker conflict"></span> Conflict</div>
+                            <div class="legend-item"><span class="marker valid"></span> Placed</div>
+                            <div class="legend-item"><span class="marker solution"></span> Solution</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Solutions Gallery -->
+        <section id="gallery" class="section bg-dim hidden">
+            <div class="container reveal">
+                <div class="section-header">
+                    <h2>Found Solutions Gallery</h2>
+                    <p id="gallery-summary">All valid configurations for N=4</p>
+                </div>
+                <div id="solutions-container" class="solutions-grid">
+                    <!-- Solutions will be injected here -->
+                </div>
+                <div id="pagination" class="pagination hidden">
+                    <button id="prev-page" class="btn btn-icon btn-outline">&laquo;</button>
+                    <span id="page-info">Page 1 of 1</span>
+                    <button id="next-page" class="btn btn-icon btn-outline">&raquo;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats & Facts Section -->
+        <section id="stats" class="section">
+            <div class="container reveal">
+                <div class="section-header text-center">
+                    <span class="badge">Statistics</span>
+                    <h2>N-Queens Constants</h2>
+                </div>
+                <div class="stats-table-wrapper glass-card">
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>N Size</th>
+                                <th>Total Solutions</th>
+                                <th>Unique Solutions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stats-body">
+                            <!-- Populated with JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Algorithm Explanation -->
+        <section id="algorithm" class="section bg-dim">
+            <div class="container reveal">
+                <div class="section-header">
+                    <h2>How the Algorithm Works</h2>
+                </div>
+                <div class="grid-2 reveal-stagger">
+                    <div class="explanation-text">
+                        <h3>Backtracking Approach</h3>
+                        <p>The visualizer uses a <strong>Depth-First Search (DFS)</strong> backtracking algorithm. It
+                            attempts to place a queen in the first available column of the first row, then recursively
+                            moves to the next row.</p>
+                        <ul class="steps-list">
+                            <li><strong>Place:</strong> Put a queen in the current row.</li>
+                            <li><strong>Validate:</strong> Check row, column, and diagonals for conflicts.</li>
+                            <li><strong>Recurse:</strong> If valid, move to the next row.</li>
+                            <li><strong>Backtrack:</strong> If no position works or solution found, remove queen and try
+                                next spot.</li>
+                        </ul>
+                    </div>
+                    <div class="code-preview glass-card">
+                        <div class="code-header">
+                            <span class="dot red"></span>
+                            <span class="dot orange"></span>
+                            <span class="dot green"></span>
+                            <span class="file-name">nQueens.js</span>
+                        </div>
+                        <pre><code>function backtrack(row) {
+  if (row === n) {
+    addSolution();
+    return;
+  }
+  
+  for (let col = 0; col < n; col++) {
+    if (isValid(row, col)) {
+      placeQueen(row, col);
+      backtrack(row + 1);
+      removeQueen(row, col);
+    }
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="shortcuts-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keyboard Shortcuts</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">Space</span>
+                        <span class="shortcut-desc">Start/Pause Solving</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">→</span>
+                        <span class="shortcut-desc">Next Step (Step Mode)</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">R</span>
+                        <span class="shortcut-desc">Reset Board</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">+/-</span>
+                        <span class="shortcut-desc">Increase/Decrease N</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">1-9</span>
+                        <span class="shortcut-desc">Set Board Size</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="shortcut-key">S</span>
+                        <span class="shortcut-desc">Toggle Sound</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solution Navigator Modal -->
+    <div id="solution-nav-modal" class="modal hidden">
+        <div class="modal-content solution-navigator">
+            <div class="modal-header">
+                <h2>Solution Navigator</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="navigator-controls">
+                    <button id="prev-solution" class="btn btn-sm btn-outline">&laquo; Previous</button>
+                    <span id="solution-counter">Solution 0 of 0</span>
+                    <button id="next-solution" class="btn btn-sm btn-outline">Next &raquo;</button>
+                </div>
+                <div id="current-solution-grid" class="current-solution-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="advanced-footer">
+        <div class="footer-top">
+            <div class="container footer-grid">
+                <div class="footer-brand reveal">
+                    <div class="logo">
+                        <span class="logo-icon">♛</span>
+                        <h3>N-Queens <span class="accent">Visualizer</span></h3>
+                    </div>
+                    <p class="footer-desc">An advanced educational platform dedicated to visualizing and mastering the
+                        N-Queens backtracking algorithm.</p>
+                </div>
+
+                <div class="footer-links reveal">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#problem">Description</a></li>
+                        <li><a href="#solver">Visualize</a></li>
+                        <li><a href="#algorithm">Logic</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-dev reveal">
+                    <h4>Developer</h4>
+                    <div class="dev-card">
+                        <p>Designed and Built by</p>
+                        <span class="dev-name gradient-text">Md Irfan</span>
+                        <div class="dev-links">
+                            <a href="https://github.com/Mdirfan077" class="btn btn-icon btn-sm"
+                                aria-label="Github" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/md-irfan-lpu/" class="btn btn-icon btn-sm"
+                                aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://mdirfan-portfolio.vercel.app/" class="btn btn-icon btn-sm"
+                                aria-label="Portfolio" target="_blank"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container flex-between">
+                <p>&copy; 2026 N-Queens Interactive Visualizer. All rights reserved.</p>
+                <div class="footer-badges">
+                    <span class="badge">Backtracking</span>
+                    <span class="badge">Recursive</span>
+                    <span class="badge">DFS</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast-container" class="toast-container"></div>
+    <button id="back-to-top" class="back-to-top btn-icon" aria-label="Back to Top">↑</button>
+</body>
+
+</html>
