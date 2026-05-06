@@ -25,6 +25,7 @@
 
     <!-- Scripts -->
     <script type="module" src="src/js/app.js"></script>
+    
 </head>
 
 <body>
@@ -189,6 +190,10 @@
                                 </select>
                             </div>
 
+                            <div class="progress-container">
+                                <div id="progress-bar"></div>
+                            </div>
+
                             <!-- Main Action Buttons -->
                             <div class="button-stack">
                                 <button id="solve-btn" class="btn btn-primary btn-block">
@@ -252,6 +257,11 @@
                 </div>
             </div>
         </section>
+
+        <div id="step-explanation" class="glass-card step-box">
+            <h4>🧠 Algorithm Step</h4>
+            <p id="step-text">Waiting to start...</p>
+        </div>
 
         <!-- All Solutions Gallery -->
         <section id="gallery" class="section bg-dim hidden">

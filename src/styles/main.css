@@ -543,6 +543,54 @@ h3 { font-size: 1.5rem; }
     font-family: inherit;
 }
 
+#step-text {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+
+
+.progress-container {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+
+.highlight-row {
+    background: rgba(255, 0, 0, 0.08) !important;
+}
+
+.highlight-col {
+    background: rgba(255, 0, 0, 0.08) !important;
+}
+
+/* Row hover effect */
+.stats-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transition: 0.2s ease;
+}
+
+/* Small animation when stats update */
+.pulse {
+    transform: scale(1.1);
+    transition: 0.2s ease;
+}
+
+html {
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4f46e5, #22c55e);
+    transition: width 0.3s ease;
+}
+
 .button-stack {
     display: flex;
     flex-direction: column;
@@ -1020,6 +1068,12 @@ h3 { font-size: 1.5rem; }
     font-size: 0.95rem;
     flex: 1;
     text-align: center;
+}
+
+.reveal,
+.reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
 }
 
 .current-solution-grid {

@@ -1,33 +1,101 @@
-# N-Queens Visualizer
+# ♛ N-Queens Backtracking Visualizer
 
-A premium, interactive web application to visualize the backtracking algorithm for the N-Queens problem.
+An interactive web app that visualizes the **Backtracking Algorithm** by solving the classic **N-Queens problem** step-by-step.
 
-## Features
-- **Live Visualizer**: Watch the backtracking algorithm explore solutions step-by-step.
-- **Adjustable Board**: Supports N=1 to N=9.
-- **Speed Control**: Choose between Slow, Normal, Fast, and Instant solving modes.
-- **Solutions Gallery**: View all valid configurations found during the solving process.
-- **Stats Comparison**: View a table of total vs unique solutions for different N sizes.
-- **Glassmorphism Design**: High-end dark theme with smooth animations and responsive layout.
+---
 
-## Tech Stack
-- **HTML5**: Semantic structure.
-- **Vanilla CSS**: Custom design system and animations.
-- **Vanilla JavaScript**: ES Modules (no dependencies).
-- **Backtracking Algorithm**: Depth-first search with conflict detection.
+## ✨ Features
 
-## How to Use
-1. Clone or download the repository.
-2. Open `index.html` in a modern web browser.
-3. Select a board size using the slider.
-4. Click **Solve Now** to start the visualization.
-5. Scroll down to see the full gallery of found solutions.
+* 🎯 Real-time visualization of queen placement & backtracking
+* ⚙️ Adjustable board size (N = 1 → 9)
+* 🚀 Speed control (Slow / Normal / Fast / Instant)
+* 🧠 Step-by-step explanation of algorithm
+* 🔊 Sound effects using Web Audio API
+* 📊 Solver statistics (solutions & backtracks)
+* 🖼️ Solutions gallery
+* 🎨 Modern UI with animations & responsive design
 
-## File Structure
-- `index.html`: Main entry point.
-- `src/styles/`: CSS design system and animations.
-- `src/js/`: JavaScript logic divided into modules (solver, ui, utils).
-- `src/assets/`: UI assets like icons.
+---
 
-## Problem Statement
-The N-Queens puzzle is the problem of placing N chess queens on an N×N chessboard so that no two queens threaten each other. A solution requires that no two queens share the same row, column, or diagonal.
+## 🛠️ Tech Stack
+
+* HTML5
+* CSS3 (Custom animations & design system)
+* Vanilla JavaScript (ES Modules)
+* Web Audio API
+* Backtracking Algorithm
+
+---
+
+## 🚀 How to Run
+
+1. Clone the repository:
+
+```bash id="1v0qpu"
+git clone https://github.com/Mdirfan077/N-Queens-Backtracking-Visualizer.git
+```
+
+2. Open project:
+
+```bash id="p5q3s9"
+cd n-queens-visualizer
+```
+
+3. Run using Live Server (recommended)
+   OR open `index.html` in browser
+
+---
+
+## 🧠 How It Works
+
+1. Place queen row by row
+2. Check:
+
+   * Column conflict
+   * Diagonal conflict
+3. If valid → move forward
+4. If invalid → backtrack 🔁
+
+---
+
+## 📜 Problem Statement
+
+Place **N queens on an N×N chessboard** such that:
+
+* No two queens share the same **row**
+* No two queens share the same **column**
+* No two queens share the same **diagonal**
+
+---
+
+## 💡 Why This Project?
+
+* Demonstrates algorithm visualization
+* Shows clean modular JavaScript architecture
+* Uses state management without frameworks
+* Combines logic + UI/UX design
+
+---
+
+## 🔮 Future Improvements
+
+* ▶️ Replay feature
+* 📈 Performance visualization
+* 🌐 Live deployment
+* 🎯 Interactive board controls
+
+---
+
+## 👨‍💻 Author
+
+**Md Irfan**
+
+---
+
+## ⭐ Support
+
+* ⭐ Star the repo
+* 🍴 Fork it
+* 📢 Share it
+
+---
