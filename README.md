@@ -86,6 +86,10 @@ Place **N queens on an N×N chessboard** such that:
 
 ---
 
+## 🌐 Live Demo
+
+https://n-queens-backtracking-visualizer-eight.vercel.app
+
 ## 👨‍💻 Author
 
 **Md Irfan**
